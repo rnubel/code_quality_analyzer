@@ -3,6 +3,17 @@ GEM
   specs:
     coderay (1.0.8)
     diff-lcs (1.2.2)
+    guard (1.6.2)
+      listen (>= 0.6.0)
+      lumberjack (>= 1.0.2)
+      pry (>= 0.9.10)
+      terminal-table (>= 1.4.3)
+      thor (>= 0.14.6)
+    guard-rspec (2.4.0)
+      guard (>= 1.1)
+      rspec (~> 2.11)
+    listen (0.7.2)
+    lumberjack (1.0.2)
     metaclass (0.0.1)
     method_source (0.8.1)
     mocha (0.13.3)
@@ -23,11 +34,14 @@ GEM
       sexp_processor (~> 4.1)
     sexp_processor (4.2.0)
     slop (3.4.3)
+    terminal-table (1.4.5)
+    thor (0.17.0)
 
 PLATFORMS
   ruby
 
 DEPENDENCIES
+  guard-rspec
   mocha
   pry
   rspec
