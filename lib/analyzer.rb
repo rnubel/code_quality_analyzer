@@ -1,4 +1,5 @@
 require 'ruby_parser'
+require File.expand_path('../enumerable.rb', __FILE__)
 
 class Analyzer
   class CodeMethod
@@ -10,9 +11,43 @@ class Analyzer
     end
 
     def source
+      return @source if @source
       lines = {}
       @sexp.deep_each { |node| lines[node.line] = true }
-      file[lines.keys.sort.first, lines.keys.size]
+      @source = file[lines.keys.sort.first, lines.keys.size]
+    end
+
+    def normalized_lines
+      @normalized_lines ||= source.lines.drop(1).reverse.drop(1).reverse.map(&:strip)
+    end
+
+    def num_lines
+      normalized_lines.count
+    end
+
+    def min_line_length
+      normalized_lines.map(&:length).min
+    end
+
+    def max_line_length
+      normalized_lines.map(&:length).min
+    end
+
+    def avg_line_length
+      normalized_lines.map(&:length).mean
+    end
+
+    def line_length_std_dev
+      normalized_lines.map(&:length).standard_deviation
+    end
+
+    def analysis
+      analysis = {}
+      %w(num_lines min_line_length max_line_length avg_line_length line_length_std_dev).each do |k|
+        analysis[k.to_sym] = self.send(k)
+      end
+
+      return analysis
     end
   end
 

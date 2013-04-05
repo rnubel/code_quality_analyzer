@@ -29,7 +29,7 @@ describe Analyzer do
         expect(analysis).to have(2).analyzed_methods
       end
 
-      describe "in the analyzed method" do
+      describe "has the analyzed methods, each of which" do
         let(:method) { analysis.analyzed_methods.first }
 
         it "has the parsed sexp of the method" do
@@ -41,6 +41,20 @@ describe Analyzer do
           "        def foo(a, b, c)\n" + 
           "          a + b + c\n" +
           "        end\n"
+        end
+
+        it "can normalize the method body" do
+          method.normalized_lines.should == ["a + b + c"]
+        end
+
+        it "outputs an analysis table" do
+          method.analysis.should == {
+            num_lines: 1,
+            min_line_length: 9,
+            max_line_length: 9,
+            avg_line_length: 9.0,
+            line_length_std_dev: 0
+          }
         end
       end
     end
