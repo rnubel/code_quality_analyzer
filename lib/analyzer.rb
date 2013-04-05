@@ -90,6 +90,8 @@ class Analyzer
     end
 
     def analyzed_methods
+      return [] unless @sexp
+
       methods = []
       @sexp.deep_each do |node|
         methods << CodeMethod.new(node, self) if [:defn, :defs].include? node.node_type
